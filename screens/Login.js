@@ -24,6 +24,10 @@ export default class App extends React.Component {
      //     this.props.navigation.navigate('HomeStack')
    }
 
+  _navigate = () => {
+    this.props.navigation.navigate('Register')
+  }
+
   render() {
     return (
      // <KeyboardAvoidingView style={styles.wrapper} behavior="padding" enabled>
@@ -46,7 +50,7 @@ export default class App extends React.Component {
           </TouchableOpacity>
             <Text style={styles.link}>¿Aún no tienes una cuenta?</Text>
           <TouchableOpacity
-            onPress={()=>this.props.navigation.navigate('Register')}>
+            onPress={() => this._navigate()}>
             <Text style={styles.textlink}>Regístrate</Text>
           </TouchableOpacity>
         </View>

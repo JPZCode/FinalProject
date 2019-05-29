@@ -9,7 +9,7 @@ export default class App extends React.Component {
       username: '',
       password: '',
       email: '',
-      nameComple: '',
+      nameComple: ''
     }
   }
 
@@ -24,11 +24,16 @@ export default class App extends React.Component {
 
     AsyncStorage.setItem('session', JSON.stringify(obj));
       if (obj) {
-          this.props.navigation.navigate('HomeStack');
+				this.props.navigation.navigate('Login');
+				alert('Registro exitoso. Inicia Sesión.')
       } else {
-          this.props.navigation.navigate('Login');
+        alert('Error.')
       }
-    }
+		}
+	
+		_navigate = () => {
+			this.props.navigation.navigate('Login');
+		}
 
   render() {
     return (
@@ -65,7 +70,7 @@ export default class App extends React.Component {
 
             <Text style={styles.link}>¿Ya tienes una cuenta?</Text>
           <TouchableOpacity
-            onPress={()=>this.props.navigation.navigate('Login')}>
+            onPress={() => navigate('Login')}>
             <Text style={styles.textlink}>Inicia Sesión</Text>
           </TouchableOpacity>
 

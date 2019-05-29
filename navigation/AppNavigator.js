@@ -7,7 +7,7 @@ import Register from '../screens/Register';
 export default createAppContainer(createSwitchNavigator({
   // You could add another route here for authentication.
   // Read more at https://reactnavigation.org/docs/en/auth-flow.html
-  Main: Login,
-  Register: Register,
+  Start: Login,
+  Main: Register,
   Navigator: MainTabNavigator,
 }));
