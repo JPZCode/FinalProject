@@ -1,60 +1,66 @@
 import React from 'react';
-import { KeyboardAvoidingView, StyleSheet, Text, View, TextInput, AsyncStorage, TouchableOpacity } from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  View,
+  TextInput,
+  AsyncStorage,
+  KeyboardAvoidingView,
+  TouchableOpacity,
+} from 'react-native';
 
-export default class App extends React.Component {
-  
-  constructor(props) {
+export default class LoginScreen extends React.Component {
+  static navigationOptions = {
+    header: null,
+  };
+
+  constructor(props){
     super(props);
     this.state = {
-      username: '',
+      key: 0,
+      userName: '',
       password: '',
-      email: '',
-      nameComplete: '',
     }
   }
 
-   _login = async () => {
-     try {
-       let user = await AsyncStorage.getItem('user');
-       let parsed = JSON.parse(user);
-       alert(parsed.name);
-     } catch (error) {
-       alert(error);
-     }
-     //     this.props.navigation.navigate('HomeStack')
-   }
+  _login = () => {
+    AsyncStorage.getItem('@Session:user')
+      .then((valor) => {
+        const parsed = JSON.parse(valor);
+        let user = parsed.find(user => user.nameU === this.state.userName);
+        console.log(user.email);
 
-  _navigate = () => {
-    this.props.navigation.navigate('Register')
+
+        console.log(this.state.userName + '' + this.state.password);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+    //this.props.navigation.navigate('HomeStack');
   }
 
   render() {
     return (
-     // <KeyboardAvoidingView style={styles.wrapper} behavior="padding" enabled>
-        <View style={styles.container}>
-          <Text style={styles.title}> Inicio de Sesión </Text>
+      <View style={styles.container}>
+        <Text style={styles.title}> Inicio de Sesión </Text>
+        <KeyboardAvoidingView style={styles.wrapper} behavior="padding" enabled>
           <TextInput style={styles.input}
             placeholder="Nombre de usuario"
             placeholderTextColor="#000"
-            onChangeText={username => this.setState({username})}            
+            onChangeText={value => this.setState({userName:value})}            
           />
           <TextInput style={styles.input}
             placeholder="•••••••"
             placeholderTextColor="#000"
             secureTextEntry={true}
-            onChangeText={password => this.setState({password})}              
+            onChangeText={value => this.setState({password:value})}              
           />
           <TouchableOpacity style={styles.btn}
             onPress={() => this._login()}>
             <Text style={styles.textbtn}>Iniciar Sesión</Text>
           </TouchableOpacity>
-            <Text style={styles.link}>¿Aún no tienes una cuenta?</Text>
-          <TouchableOpacity
-            onPress={() => this._navigate()}>
-            <Text style={styles.textlink}>Regístrate</Text>
-          </TouchableOpacity>
-        </View>
-     // </KeyboardAvoidingView>
+        </KeyboardAvoidingView>
+      </View>
     );
   }
 }
@@ -62,19 +68,20 @@ export default class App extends React.Component {
 const styles = StyleSheet.create({
   wrapper: {
     flex: 1,
+    paddingLeft: 40,
+    paddingRight: 40,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   container: {
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    paddingLeft: 40,
-    paddingRight: 40,
   },
   title: {
     fontSize: 30,
-    marginBottom: 40,
+    marginTop: 80,
     color: '#000',
     fontWeight: 'bold',
+    alignSelf: 'center',
     textShadowOffset: {width: 2, height: 1},
   },
   input: {
@@ -99,11 +106,4 @@ const styles = StyleSheet.create({
   textbtn: {
     fontSize: 16,
   },
-  link: {
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  textlink: {
-    fontWeight: 'bold',
-  }
 });

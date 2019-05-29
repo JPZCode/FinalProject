@@ -1,81 +1,91 @@
 import React from 'react';
-import { KeyboardAvoidingView, StyleSheet, Text, View, TextInput, AsyncStorage, TouchableOpacity } from 'react-native';
+import {
+  KeyboardAvoidingView,
+  StyleSheet,
+  Text,
+  View,
+  TextInput,
+  AsyncStorage,
+  TouchableOpacity
+} from 'react-native';
 
-export default class App extends React.Component {
-  
+export default class RegisterScreen extends React.Component {
+  static navigationOptions = {
+    header: null,
+  };
+
   constructor(props) {
     super(props);
     this.state = {
-      username: '',
-      password: '',
+      key: 0,
+      userName: [],
+      nameComple: '',
       email: '',
-      nameComple: ''
+      password: '',
+
     }
   }
 
   _register = () => {
-
     let obj = {
-        nameU: this.state.username,
-        nameC: this.state.nameComple,
-        email: this.state.email,
-        pass: this.state.password
+      key: this.state.key+1,
+      nameU: this.state.userName,
+      nameC: this.state.nameComple,
+      email: this.state.email,
+      pass: this.state.password
     }
 
-    AsyncStorage.setItem('session', JSON.stringify(obj));
-      if (obj) {
-				this.props.navigation.navigate('Login');
-				alert('Registro exitoso. Inicia Sesión.')
-      } else {
-        alert('Error.')
-      }
-		}
-	
-		_navigate = () => {
-			this.props.navigation.navigate('Login');
-		}
+    let registeredUsers = AsyncStorage.getItem('@Session:user', (users) => {
+      console.log(users)
+    });
+
+    return
+
+    AsyncStorage.setItem('@Session:user', JSON.stringify([obj]))
+    .then((valor)=>{
+      console.log(valor);
+      this.props.navigation.navigate('LogIn');
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+  }
 
   render() {
+    const {navigate} = this.props.navigation;
     return (
-      //<KeyboardAvoidingView style={styles.wrapper} behavior="padding" enabled>
-        <View style={styles.container}>
-          <Text style={styles.title}> Registro </Text>
+      <View style={styles.container}>
+        <Text style={styles.title}> Registro </Text>
+        <KeyboardAvoidingView style={styles.wrapper} behavior="padding" enabled>
           <TextInput style={styles.input}
             placeholder="Nombre de usuario"
             placeholderTextColor="#000"
-            onChangeText={username => this.setState({username})}            
+            onChangeText={value => this.setState({userName: value})}            
           />
           <TextInput style={styles.input}
             placeholder="Nombre Completo"
             placeholderTextColor="#000"
-            onChangeText={nameComple => this.setState({nameComple})}
+            onChangeText={value => this.setState({nameComple: value})}
           />
           <TextInput style={styles.input}
             placeholder="Correo Electrónico"
             placeholderTextColor="#000"
-            onChangeText={email => this.setState({email})}
+            onChangeText={value => this.setState({email: value})}
           />
           <TextInput style={styles.input}
             placeholder="•••••••"
             placeholderTextColor="#000"
             secureTextEntry={true}
-            onChangeText={password => this.setState({password})}              
+            onChangeText={value => this.setState({password: value})}              
           />
           
-
           <TouchableOpacity style={styles.btn}
-            onPress={() => this._register()}>
+            onPress={() => {this._register()}}>
             <Text style={styles.textbtn}>Regístrate</Text>
           </TouchableOpacity>
-
-            <Text style={styles.link}>¿Ya tienes una cuenta?</Text>
-          <TouchableOpacity
-            onPress={() => navigate('Login')}>
-            <Text style={styles.textlink}>Inicia Sesión</Text>
-          </TouchableOpacity>
+        </KeyboardAvoidingView>
 
         </View>
-     // </KeyboardAvoidingView>
     );
   }
 }
@@ -83,19 +93,20 @@ export default class App extends React.Component {
 const styles = StyleSheet.create({
   wrapper: {
     flex: 1,
+    paddingLeft: 40,
+    paddingRight: 40,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   container: {
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    paddingLeft: 40,
-    paddingRight: 40,
   },
   title: {
     fontSize: 30,
-    marginBottom: 40,
+    marginTop: 80,
     color: '#000',
     fontWeight: 'bold',
+    alignSelf: 'center',
     textShadowOffset: {width: 2, height: 1},
   },
   input: {
@@ -120,11 +131,4 @@ const styles = StyleSheet.create({
   textbtn: {
     fontSize: 16,
   },
-  link: {
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  textlink: {
-    fontWeight: 'bold',
-  }
 });
