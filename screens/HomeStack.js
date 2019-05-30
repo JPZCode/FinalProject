@@ -5,6 +5,7 @@ import {
   AsyncStorage,
   Text,
   View,
+  Image,
 } from 'react-native';
 
 export default class HomeScreen extends React.Component {
@@ -36,9 +37,17 @@ export default class HomeScreen extends React.Component {
 
           <Text style={styles.title}>Bienvenido</Text>
           <Text style={styles.subtitle}>Datos personales</Text>
-          <Text style={styles.data}> {this.state.user.nameU} </Text>
-          <Text style={styles.data}> {this.state.user.nameC} </Text>
-          <Text style={styles.data}> {this.state.user.email} </Text>
+
+          <Image 
+          style={styles.img}
+          source={require('../assets/images/robot-dev.png')}
+          />
+          <Text style={styles.data}>Nombre de Usuario: </Text>
+            <Text style={styles.textdata}>{this.state.user.nameU}</Text>
+          <Text style={styles.data}>Nombre Completo: </Text>
+            <Text style={styles.textdata}>{this.state.user.nameC}</Text>
+          <Text style={styles.data}>Correo: </Text>
+            <Text style={styles.textdata}>{this.state.user.email}</Text>
 
         </ScrollView>
       </View>
@@ -50,22 +59,40 @@ export default class HomeScreen extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    // alignItems: 'center',
-    // justifyContent: 'center',
+    paddingLeft: 15,
+    paddingRight: 15,
   },
    title: {
-     fontSize: 20,
-     marginTop: 70,
+     fontSize: 28,
+     marginTop: 65,
      color: '#000',
      fontWeight: 'bold',
      alignSelf: 'center',
    },
    subtitle:{
-    // fontSize: ,
+    fontSize: 22,
     marginTop: 15,
+    marginBottom: 15,
     color: '#000',
     fontWeight: 'normal',
     alignSelf: 'flex-start',
    },
+   img:{
+    width: 50,
+    height: 50,
+   },
+   data:{
+    fontSize: 15,
+    marginTop: 10,
+    color: '#000',
+    alignSelf: 'flex-start',
+    fontWeight: 'bold',
+   },
+   textdata:{
+    fontSize: 13.5,
+    marginTop: 10,
+    color: '#000',
+    alignSelf: 'flex-start',
+    
+   }
 });
