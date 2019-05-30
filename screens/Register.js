@@ -17,8 +17,7 @@ export default class RegisterScreen extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      key: 0,
-      userName: [],
+      userName: '',
       nameComple: '',
       email: '',
       password: '',
@@ -27,32 +26,48 @@ export default class RegisterScreen extends React.Component {
   }
 
   _register = () => {
+    //const users = [];
+    
     let obj = {
-      key: this.state.key+1,
       nameU: this.state.userName,
       nameC: this.state.nameComple,
       email: this.state.email,
       pass: this.state.password
     }
 
-    let registeredUsers = AsyncStorage.getItem('@Session:user', (users) => {
-      console.log(users)
-    });
-
-    return
-
-    AsyncStorage.setItem('@Session:user', JSON.stringify([obj]))
-    .then((valor)=>{
-      console.log(valor);
-      this.props.navigation.navigate('LogIn');
-    })
-    .catch((error) => {
-      console.log(error);
-    });
+    //const {userName,nameComple,email,password} = this.state;
+      AsyncStorage.getItem('@Session:user')
+      .then((valor) => {
+        const parsed = JSON.parse(valor);
+        let user = parsed.find(user => user.nameU === this.state.userName);
+        let nCom = parsed.find(user => user.nameC === this.state.nameComple);
+        let mail = parsed.find(user => user.email === this.state.email);
+        
+        if (this.state.userName == "" || this.state.nameComple == "" || this.state.email == "" || this.state.password == "") {
+          alert('Llene todos los campos')
+        } else if(user){
+          console.log(this.state.userName + '' + this.state.password);
+          alert('Nombre de usuario ya registrado')
+        } else if (nCom) {
+          alert('Nombre ya registrado')
+        } else if (mail) {
+          alert('Correo ya registrado')
+        } else{
+          
+          AsyncStorage.setItem('@Session:user', JSON.stringify([obj]))
+            .then((valor) => {
+              this.props.navigation.navigate('LogIn');
+              console.log(valor);
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+        }
+        })
+    
   }
 
   render() {
-    const {navigate} = this.props.navigation;
     return (
       <View style={styles.container}>
         <Text style={styles.title}> Registro </Text>

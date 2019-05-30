@@ -17,7 +17,6 @@ export default class LoginScreen extends React.Component {
   constructor(props){
     super(props);
     this.state = {
-      key: 0,
       userName: '',
       password: '',
     }
@@ -28,15 +27,17 @@ export default class LoginScreen extends React.Component {
       .then((valor) => {
         const parsed = JSON.parse(valor);
         let user = parsed.find(user => user.nameU === this.state.userName);
-        console.log(user.email);
+        let pass = parsed.find(user => user.pass === this.state.password);
 
-
-        console.log(this.state.userName + '' + this.state.password);
+        if(user && pass){
+          this.props.navigation.navigate('HomeStack');
+        }else{
+          alert('Usuario o Contraseña incorrectos');
+        }
       })
       .catch((error) => {
         console.log(error);
       });
-    //this.props.navigation.navigate('HomeStack');
   }
 
   render() {
