@@ -26,9 +26,9 @@ export default class SettingsScreen extends React.Component {
      this.setState({ user: user })
   }
 
-   _fetch() {
-    let response =  fetch('https://dog.ceo/api/breed/'+this.state.user+'/images/random/'); ////////////////////
-    const json = response.json();
+  async _fetch() {
+    let response = await fetch('https://dog.ceo/api/breed/(Raza)/images/random/');
+    const json = await response.json();
     this.setState({
       dogs: json
     });
