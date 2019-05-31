@@ -25,6 +25,7 @@ export default class LinksScreen extends React.Component {
     this.setState({
       dogs: json
     });
+    console.log(json);
   }
 
   render() {
