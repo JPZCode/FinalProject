@@ -2,12 +2,14 @@ import React from 'react';
 import {
   ScrollView,
   StyleSheet,
-  ActivityIndicator
+  ActivityIndicator,
 } from 'react-native';
+
+import Image from '../components/Image';
 
 export default class LinksScreen extends React.Component {
   static navigationOptions = {
-    title: 'Links',
+    title: 'Perritos Kawaii',
   };
 
   constructor() {
@@ -17,21 +19,12 @@ export default class LinksScreen extends React.Component {
     }
   }
 
-  componentDidMount() {
-    this._fetchDogs();
-  }
-
-  _fetchDogs = () => {
-    let dogPetition = new XMLHttpRequest;
-    dogPetition.open('https://dog.ceo/api/breed/hound/images');
-    dogPetition.onreadystatechange = () => {
-      if (dogPetition.status == 200 && dogPetition.readyState == 4) {
-        this.setState({
-          dogs: JSON.parse(dogPetition.resposeText)
-        })
-      }
-    }
-    dogPetition.send();
+  async componentDidMount() {
+    let response = await fetch('https://dog.ceo/api/breeds/image/random/20');
+    const json = await response.json();
+    this.setState({
+      dogs: json
+    });
   }
 
   render() {
@@ -41,9 +34,7 @@ export default class LinksScreen extends React.Component {
           this.state.dogs ?
             this.state.dogs.message.map((dog, key) => {
               return (
-                <View style={styles.card}>
-                
-                </View>
+                <Image styles={styles.card} key={key} url={dog}/>
               )
             })
             : <ActivityIndicator/>
@@ -58,5 +49,9 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingTop: 15,
     backgroundColor: '#fff',
+  },
+  card: {
+    flex: 1,
+    paddingBottom: 15,
   },
 });

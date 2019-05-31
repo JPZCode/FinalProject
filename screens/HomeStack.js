@@ -10,7 +10,7 @@ import {
 
 export default class HomeScreen extends React.Component {
   static navigationOptions = {
-    header: null,
+    title: 'Perfil',
   };
 
   constructor(props) {
@@ -64,7 +64,7 @@ const styles = StyleSheet.create({
   },
    title: {
      fontSize: 28,
-     marginTop: 65,
+     marginTop: 30,
      color: '#000',
      fontWeight: 'bold',
      alignSelf: 'center',

@@ -7,6 +7,7 @@ import {
   AsyncStorage,
   KeyboardAvoidingView,
   TouchableOpacity,
+  ActivityIndicator
 } from 'react-native';
 
 export default class LoginScreen extends React.Component {
@@ -31,6 +32,7 @@ export default class LoginScreen extends React.Component {
 
         if(user && pass){
           this.props.navigation.navigate('HomeStack');
+          <ActivityIndicator/>
         }else{
           alert('Usuario o Contraseña incorrectos');
         }
