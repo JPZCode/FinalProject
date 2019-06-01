@@ -93,6 +93,6 @@ const styles = StyleSheet.create({
     marginTop: 10,
     color: '#000',
     alignSelf: 'flex-start',
-    
+
    }
 });
