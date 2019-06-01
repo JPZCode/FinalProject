@@ -25,6 +25,16 @@ export default class RegisterScreen extends React.Component {
     }
   }
 
+  componentDidMount() {
+    AsyncStorage.getItem('@Session:user')
+      .then((valor) => {
+        const parsed = JSON.parse(valor);
+        this.setState({
+          user: parsed[0]
+        })
+      })
+  }
+
   _register = () => {
     //const users = [];
     
@@ -53,7 +63,6 @@ export default class RegisterScreen extends React.Component {
         } else if (mail) {
           alert('Correo ya registrado')
         } else{
-          
           AsyncStorage.setItem('@Session:user', JSON.stringify([obj]))
             .then((valor) => {
               this.props.navigation.navigate('LogIn');
@@ -146,4 +155,4 @@ const styles = StyleSheet.create({
   textbtn: {
     fontSize: 16,
   },
-})
+});
