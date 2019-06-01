@@ -17,22 +17,11 @@ export default class RegisterScreen extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      userName: '',
-      nameComple: '',
-      email: '',
-      password: '',
-
+      userName: 'Pam',
+      nameComple: 'Pam Pérez',
+      email: 'pam@mail.com',
+      password: '123',
     }
-  }
-
-  componentDidMount() {
-    AsyncStorage.getItem('@Session:user')
-      .then((valor) => {
-        const parsed = JSON.parse(valor);
-        this.setState({
-          user: parsed[0]
-        })
-      })
   }
 
   _register = () => {
@@ -45,7 +34,6 @@ export default class RegisterScreen extends React.Component {
       pass: this.state.password
     }
 
-    //const {userName,nameComple,email,password} = this.state;
       AsyncStorage.getItem('@Session:user')
       .then((valor) => {
         const parsed = JSON.parse(valor);

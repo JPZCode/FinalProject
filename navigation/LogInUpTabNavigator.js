@@ -4,7 +4,7 @@ import { createStackNavigator, createBottomTabNavigator } from 'react-navigation
 
 import TabBarIcon from '../components/TabBarIcon';
 import RegisterScreen from '../screens/Register';
-import LoginScreen from '../screens/LogIn';
+import LoginScreen from '../screens/Login';
 
 const Main = createStackNavigator({
   Main: RegisterScreen,
