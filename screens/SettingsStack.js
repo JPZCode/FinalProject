@@ -84,7 +84,7 @@ export default class SettingsScreen extends React.Component {
               this.state.dogs ?
                 this.state.dogs.message.map((dog, key) => {
                   return (
-                    <Image styles={styles.image} key={key} url={dog} />
+                    <Image styles={styles.card} key={key} url={dog} />
                   )
                 })
                 : <ActivityIndicator/>
