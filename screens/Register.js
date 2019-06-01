@@ -146,4 +146,4 @@ const styles = StyleSheet.create({
   textbtn: {
     fontSize: 16,
   },
-});
+})
