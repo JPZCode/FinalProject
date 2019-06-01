@@ -24,16 +24,32 @@ export default class RegisterScreen extends React.Component {
     }
   }
 
-  _register = () => {
-    //const users = [];
-    
+  componentDidMount() {
     let obj = {
       nameU: this.state.userName,
       nameC: this.state.nameComple,
       email: this.state.email,
       pass: this.state.password
     }
+    
+    AsyncStorage.setItem('@Session:user', JSON.stringify([obj]))
+      .then((valor) => {
+        console.log(valor);
+        console.log('registrando');
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
 
+  _register = () => {
+    let obj = {
+      nameU: this.state.userName,
+      nameC: this.state.nameComple,
+      email: this.state.email,
+      pass: this.state.password
+    }
+    
       AsyncStorage.getItem('@Session:user')
       .then((valor) => {
         const parsed = JSON.parse(valor);
@@ -53,14 +69,15 @@ export default class RegisterScreen extends React.Component {
         } else{
           AsyncStorage.setItem('@Session:user', JSON.stringify([obj]))
             .then((valor) => {
-              this.props.navigation.navigate('LogIn');
+              this.props.navigation.navigate('Login');
               console.log(valor);
+              alert('Registro existo.')
           })
           .catch((error) => {
             console.log(error);
           });
         }
-        })
+      })
     
   }
 

@@ -6,6 +6,7 @@ import {
   Text,
   View,
   Image,
+  TouchableOpacity
 } from 'react-native';
 
 export default class HomeScreen extends React.Component {
@@ -30,6 +31,19 @@ export default class HomeScreen extends React.Component {
       })
   }
 
+  async _closeSession() {
+    try {
+      await AsyncStorage.removeItem('@Session:user')
+      // .then((valor) => {
+      //   const parsed = JSON.parse(valor);
+      //   this.props.navigation.navigate('Login');
+        console.log('Changarro cerrado' + parsed);
+      // })
+    } catch (err) {
+      console.log(`The error is: ${err}`)
+    }
+  }
+
   render() {
     return (
       <View style={styles.container}>
@@ -48,6 +62,11 @@ export default class HomeScreen extends React.Component {
             <Text style={styles.textdata}>{this.state.user.nameC}</Text>
           <Text style={styles.data}>Correo: </Text>
             <Text style={styles.textdata}>{this.state.user.email}</Text>
+
+          <TouchableOpacity
+            onPress={() => {this._closeSession()}}>
+            <Text style={styles.textbtn}>Salir</Text>
+          </TouchableOpacity>  
 
         </ScrollView>
       </View>
@@ -94,5 +113,9 @@ const styles = StyleSheet.create({
     color: '#000',
     alignSelf: 'flex-start',
 
-   }
+   },
+   textbtn: {
+     marginTop: 25,
+     fontSize: 16,
+   },
 });
