@@ -3,7 +3,6 @@ import {
   StyleSheet,
   View,
   Picker,
-  Button,
   ScrollView,
   ActivityIndicator
 } from 'react-native';
@@ -23,8 +22,14 @@ export default class SettingsScreen extends React.Component {
     }
   }
 
-  componentWillReceiveProps() {
+  componentDidMount() {
     this._picker();
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.breed !== this.state.breed) {
+      this._picker();
+    }
   }
   
   _fill = (breeds) => {
@@ -41,7 +46,9 @@ export default class SettingsScreen extends React.Component {
     this.setState({
       dogs: json
     });
+
     console.log(this.state.dogs.message);
+    console.log(breeds);
   }
 
   render() {
@@ -54,25 +61,35 @@ export default class SettingsScreen extends React.Component {
             <Picker.Item label = "African" value = "african" />
             <Picker.Item label = "Akita" value = "akita" />
             <Picker.Item label = "Boxer" value = "boxer" />
-            <Picker.Item label = "African" value = "african" />
-            <Picker.Item label = "Akita" value = "akita" />
-            <Picker.Item label = "Boxer" value = "boxer" />
-          </Picker>
+            <Picker.Item label = "Mountain" value = "mountain" />
+            <Picker.Item label = "Chihuahua" value = "chihuahua" />
+            <Picker.Item label = "Terrier" value = "terrier" />
 
-          {/* <Image style={styles.image}
-          source = {{uri: this.state.dogs.message}}
-          /> */}
-        <ScrollView style={styles.container}>
-          {
-            this.state.dogs ?
-              this.state.dogs.message.map((dog, key) => {
-                return (
-                  <Image styles={styles.image} key={key} url={dog} />
-                )
-              })
-              : <ActivityIndicator />
-          }
-        </ScrollView>
+            <Picker.Item label = "Dingo" value = "dingo" />
+            <Picker.Item label = "Shihtzu" value = "shihtzu" />
+            <Picker.Item label = "Husky" value = "husky" />
+            <Picker.Item label = "Labrador" value = "labrador" />
+            <Picker.Item label = "Shiba" value= "shiba" />
+            <Picker.Item label = "Retriever" value = "retriever" />
+
+            <Picker.Item label = "Wolfhound" value = "wolfhound" />
+            <Picker.Item label = "Newfoundland" value = "newfoundland" />
+            <Picker.Item label = "Pointer" value = "pointer" />
+            <Picker.Item label = "Schipperke" value = "schipperke" />
+            <Picker.Item label = "Mexicanhairless" value= "mexicanhairless" />
+            <Picker.Item label = "Leonberg" value = "leonberg" />
+          </Picker>
+          <ScrollView style={styles.container}>
+            {
+              this.state.dogs ?
+                this.state.dogs.message.map((dog, key) => {
+                  return (
+                    <Image styles={styles.image} key={key} url={dog} />
+                  )
+                })
+                : <ActivityIndicator/>
+            }
+          </ScrollView>
       </View>
     )
   }
